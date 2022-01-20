@@ -9,7 +9,6 @@ if __name__ == '__main__':
     vnt_protocol.hydrate_with_hexa('766e7466617261d17456')
     vnt_protocol.decode()
     print(vnt_protocol)
-    # print(vnt_protocol.binario[::-1])
     
     
     # body = {

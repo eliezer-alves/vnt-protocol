@@ -43,7 +43,7 @@ class VntProtocol:
         self.estado     = ESTADOS[self.bin_to_dec(self.estado)]
         self.conta      = CONTAS[self.bin_to_dec(self.conta)]
         self.idade      = self.bin_to_dec(self.idade)
-        self.id         = self.bin_to_dec(self.id)
+        self.id         = self.bin_to_ascii(self.id)
 
     def transmit(encoded_data):
         return
@@ -51,7 +51,13 @@ class VntProtocol:
     def scan(self):
         encoded_data = "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
         return encoded_data
-
+    
+    def bin_to_ascii(self, binario):
+        ascii = ''
+        for i in range(0, len(binario), 8):
+            ascii += chr(self.bin_to_dec(binario[i:i+8]))
+        
+        return ascii
     
     def hexa_to_bin(self, hash):
         binario = ''
@@ -64,7 +70,6 @@ class VntProtocol:
     def bin_to_dec(self, binario):
         decimal = 0
         cont = 1
-        print(binario)
         for i in reversed(binario):
             decimal += int(i)*cont
             if((cont%2) == 0):                
