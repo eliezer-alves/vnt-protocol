@@ -9,6 +9,7 @@ class VntProtocol:
     curso = ''
     linguagem = ''
     binario = ''
+    hexa = ''
     
     def __str__(self):
         return f'\n## VntProtocol\n{{\n   id => {self.id},\n   conta => {self.conta},\n   idade => {self.idade},\n   estado => {self.estado},\n   curso => {self.curso},\n   linguagem => {self.linguagem}\n}}\n'
@@ -22,6 +23,7 @@ class VntProtocol:
         self.linguagem = attributes['linguagem']
     
     def hydrate_with_hexa(self, hexa):
+        self.hexa = hexa
         binario = self.hexa_to_bin(hexa)[::-1]
         
         self.binario    = binario
@@ -34,12 +36,16 @@ class VntProtocol:
     
     def encode(self):
         # print(self.key_for_value(ESTADOS, self.estado))
-        self.linguagem  = str(format(self.key_for_value(LINGUAGENS, self.linguagem), "b")).rjust(4, '0')
-        self.curso      = str(format(self.key_for_value(CURSOS, self.curso), "b")).rjust(4, '0')
-        self.estado     = str(format(self.key_for_value(ESTADOS, self.estado), "b")).rjust(4, '0')
-        self.conta      = str(format(self.key_for_value(CONTAS, self.conta), "b")).rjust(4, '0')
-        self.idade      = str(format(self.idade, "b")).rjust(4, '0')
-        self.id         = self.ascii_to_bin(self.id)
+        linguagem  = str(format(self.key_for_value(LINGUAGENS, self.linguagem), "b")).rjust(4, '0')
+        curso      = str(format(self.key_for_value(CURSOS, self.curso), "b")).rjust(4, '0')
+        estado     = str(format(self.key_for_value(ESTADOS, self.estado), "b")).rjust(4, '0')
+        conta      = str(format(self.key_for_value(CONTAS, self.conta), "b")).rjust(4, '0')
+        idade      = str(format(self.idade, "b")).rjust(4, '0')
+        id         = self.ascii_to_bin(self.id)
+        
+        self.binario = (id + conta + idade + estado + curso + linguagem)
+        self.hexa = self.bin_to_hexa(self.binario)
+
 
     def decode(self):
         self.linguagem  = LINGUAGENS[self.bin_to_dec(self.linguagem)]
@@ -71,8 +77,13 @@ class VntProtocol:
         
         return binario
     
-    def bin_to_hexa(self, binario):
-        return 0
+    def bin_to_hexa(self, binario, range_bits = 4):
+        hexa = ''
+        for i in range(0, len(binario), range_bits):
+            dec = self.bin_to_dec(binario[i:i+range_bits])
+            hexa += str(hex(dec)).replace("0x", "")
+
+        return hexa
     
     def hexa_to_bin(self, hash):
         binario = ''
