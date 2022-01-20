@@ -33,9 +33,14 @@ class VntProtocol:
         self.id         = (binario[24::])[::-1]
     
     def encode(self):
-        encoded_data = "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
-
-        return encoded_data
+        # print(self.key_for_value(ESTADOS, self.estado))
+        
+        self.linguagem  = format(self.key_for_value(LINGUAGENS, self.linguagem), "b")
+        self.curso      = format(self.key_for_value(CURSOS, self.curso), "b")
+        self.estado     = format(self.key_for_value(ESTADOS, self.estado), "b")
+        self.conta      = format(self.key_for_value(CONTAS, self.conta), "b")
+        self.idade      = format(self.idade, "b")
+        # self.id         = format(self.id, "b")
 
     def decode(self):
         self.linguagem  = LINGUAGENS[self.bin_to_dec(self.linguagem)]
@@ -78,3 +83,11 @@ class VntProtocol:
                 cont+=1
 
         return decimal
+    
+    def key_for_value(self, dictionary, search_vaue):
+        for key, value in dictionary.items():
+            if search_vaue == value:
+                return key
+        
+        return False
+
