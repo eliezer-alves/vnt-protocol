@@ -34,13 +34,12 @@ class VntProtocol:
     
     def encode(self):
         # print(self.key_for_value(ESTADOS, self.estado))
-        
-        self.linguagem  = format(self.key_for_value(LINGUAGENS, self.linguagem), "b")
-        self.curso      = format(self.key_for_value(CURSOS, self.curso), "b")
-        self.estado     = format(self.key_for_value(ESTADOS, self.estado), "b")
-        self.conta      = format(self.key_for_value(CONTAS, self.conta), "b")
-        self.idade      = format(self.idade, "b")
-        # self.id         = format(self.id, "b")
+        self.linguagem  = str(format(self.key_for_value(LINGUAGENS, self.linguagem), "b")).rjust(4, '0')
+        self.curso      = str(format(self.key_for_value(CURSOS, self.curso), "b")).rjust(4, '0')
+        self.estado     = str(format(self.key_for_value(ESTADOS, self.estado), "b")).rjust(4, '0')
+        self.conta      = str(format(self.key_for_value(CONTAS, self.conta), "b")).rjust(4, '0')
+        self.idade      = str(format(self.idade, "b")).rjust(4, '0')
+        self.id         = self.ascii_to_bin(self.id)
 
     def decode(self):
         self.linguagem  = LINGUAGENS[self.bin_to_dec(self.linguagem)]
@@ -63,6 +62,17 @@ class VntProtocol:
             ascii += chr(self.bin_to_dec(binario[i:i+8]))
         
         return ascii
+    
+    def ascii_to_bin(self, ascii):
+        binario = ''
+        print(ascii)
+        for i in ascii:
+            binario += str(format(ord(i), "b")).rjust(8, '0')
+        
+        return binario
+    
+    def bin_to_hexa(self, binario):
+        return 0
     
     def hexa_to_bin(self, hash):
         binario = ''
