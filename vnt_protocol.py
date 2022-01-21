@@ -26,7 +26,7 @@ class VntProtocol:
         self.hexa = hexa
         binario = self.hexa_to_bin(hexa)[::-1]
         
-        self.binario    = binario
+        self.binario    = binario[::-1]
         self.linguagem  = (binario[0:4])[::-1]
         self.curso      = (binario[4:8])[::-1]
         self.estado     = (binario[8:13])[::-1]
@@ -36,11 +36,12 @@ class VntProtocol:
     
     def encode(self):
         # print(self.key_for_value(ESTADOS, self.estado))
+
         linguagem  = str(format(self.key_for_value(LINGUAGENS, self.linguagem), "b")).rjust(4, '0')
         curso      = str(format(self.key_for_value(CURSOS, self.curso), "b")).rjust(4, '0')
-        estado     = str(format(self.key_for_value(ESTADOS, self.estado), "b")).rjust(4, '0')
+        estado     = str(format(self.key_for_value(ESTADOS, self.estado), "b")).rjust(5, '0')
         conta      = str(format(self.key_for_value(CONTAS, self.conta), "b")).rjust(4, '0')
-        idade      = str(format(self.idade, "b")).rjust(4, '0')
+        idade      = str(format(self.idade, "b")).rjust(7, '0')
         id         = self.ascii_to_bin(self.id)
         
         self.binario = (id + conta + idade + estado + curso + linguagem)
