@@ -23,3 +23,21 @@ if __name__ == '__main__':
     print(vnt_protocol.binario)
     print(vnt_protocol.hexa)
     print(vnt_protocol)
+
+    vnt_protocol.hydrate_with_hexa(vnt_protocol.hexa)
+    vnt_protocol.decode()
+    print(vnt_protocol.binario)
+    print(vnt_protocol.hexa)
+    print(vnt_protocol)
+    
+    vnt_protocol.hydrate_with_hexa(vnt_protocol.hexa)
+    vnt_protocol.decode()
+    print(vnt_protocol.binario)
+    print(vnt_protocol.hexa)
+    print(vnt_protocol)
+
+    vnt_protocol.hydrate_with_hexa(vnt_protocol.hexa)
+    vnt_protocol.decode()
+    print(vnt_protocol.binario)
+    print(vnt_protocol.hexa)
+    print(vnt_protocol)
